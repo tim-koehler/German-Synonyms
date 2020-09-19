@@ -2,7 +2,7 @@
 	"name": "german-synonyms",
 	"displayName": "German Synonyms",
 	"description": "Extension to easily lookup synonyms while writing text in german",
-	"version": "0.0.1",
+	"version": "1.0.0",
 	"publisher": "Tim-Koehler",
 	"engines": {
 		"vscode": "^1.49.0"
