@@ -1,5 +1,6 @@
 import * as vscode from 'vscode';
 import * as https from 'https';
+import { Agent } from 'http';
 
 interface Synonyms {
 	synsets: Synsets[]
@@ -20,7 +21,14 @@ export function activate(context: vscode.ExtensionContext) {
 		const editor = vscode.window.activeTextEditor;
 		const text = editor?.document.getText(editor.selection);	
 
-		https.get(`https://www.openthesaurus.de/synonyme/search?q=${text}&format=application/json`, (resp) => {
+		const options = {
+			hostname: 'www.openthesaurus.de',
+			path: `/synonyme/search?q=${text}&format=application/json`,
+			method: 'GET',
+			headers: { 'User-Agent': 'https://marketplace.visualstudio.com/items?itemName=Tim-Koehler.german-synonyms&ssr=false' }
+		  };
+
+		https.get(options, (resp) => {
             let data = '';
 
             resp.on('data', (chunk) => {
