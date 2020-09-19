@@ -10,14 +10,14 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onCommand:German-Synonyms.helloWorld"
+		"onCommand:German-Synonyms.lookupSynonym"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
 		"commands": [
 			{
-				"command": "German-Synonyms.helloWorld",
-				"title": "Hello World"
+				"command": "German-Synonyms.lookupSynonym",
+				"title": "German-Synonyms: Lookup Synonym"
 			}
 		]
 	},
