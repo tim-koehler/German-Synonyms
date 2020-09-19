@@ -13,7 +13,6 @@ interface Term {
 	term: string
 }
 
-
 export function activate(context: vscode.ExtensionContext) {
 
 	let disposable = vscode.commands.registerCommand('German-Synonyms.lookupSynonym', () => {
@@ -30,7 +29,6 @@ export function activate(context: vscode.ExtensionContext) {
   
             resp.on('end', () => {
 				const terms = getTerms(data);
-				console.log(terms);
 				
 				if (terms.length === 0) {
 					vscode.window.showInformationMessage(`No synonym found for '${text}'`);
