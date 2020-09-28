@@ -4,6 +4,10 @@ All notable changes to the "German-Synonyms" extension will be documented in thi
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
+## [1.2.0] - 2020-09-28
+### Added
+- Support for special characters like 'äöü'
+
 ## [1.1.0] - 2020-09-20
 ### Changed
 - User-Agent for API request

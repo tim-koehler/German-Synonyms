@@ -1,6 +1,5 @@
 import * as vscode from 'vscode';
 import * as https from 'https';
-import { Agent } from 'http';
 
 interface Synonyms {
 	synsets: Synsets[]
@@ -19,11 +18,18 @@ export function activate(context: vscode.ExtensionContext) {
 	let disposable = vscode.commands.registerCommand('German-Synonyms.lookupSynonym', () => {
 
 		const editor = vscode.window.activeTextEditor;
-		const text = editor?.document.getText(editor.selection);	
+		const rawWord = editor?.document.getText(editor.selection);	
+		
+		if (rawWord === undefined) {
+			return;
+		}
 
+		const encodedWord = encodeURI(rawWord);
+		console.log(encodedWord);
+		
 		const options = {
 			hostname: 'www.openthesaurus.de',
-			path: `/synonyme/search?q=${text}&format=application/json`,
+			path: `/synonyme/search?q=${encodedWord}&format=application/json`,
 			method: 'GET',
 			headers: { 'User-Agent': 'https://marketplace.visualstudio.com/items?itemName=Tim-Koehler.german-synonyms&ssr=false' }
 		  };
@@ -39,7 +45,7 @@ export function activate(context: vscode.ExtensionContext) {
 				const terms = getTerms(data);
 				
 				if (terms.length === 0) {
-					vscode.window.showInformationMessage(`No synonym found for '${text}'`);
+					vscode.window.showInformationMessage(`No synonym found for '${encodedWord}'`);
 				} else {
 					showQuickpick(terms);
 				}
