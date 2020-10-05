@@ -2,7 +2,7 @@
 	"name": "german-synonyms",
 	"displayName": "German Synonyms",
 	"description": "Extension to easily lookup synonyms while writing text in german",
-	"version": "1.2.0",
+	"version": "1.2.1",
 	"publisher": "Tim-Koehler",
 	"repository": {
 		"url": "https://github.com/tim-koehler/German-Synonyms"
