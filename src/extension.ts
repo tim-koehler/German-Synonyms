@@ -60,7 +60,7 @@ export function activate(context: vscode.ExtensionContext): void {
 				const terms = getTerms(data);
 
 				if (terms.length === 0) {
-					vscode.window.showInformationMessage(`No synonym found for '${encodedWord}'`);
+					vscode.window.showInformationMessage(`No synonym found for '${rawWord}'`);
 				} else {
 					showQuickpick(terms, editor, wordRange);
 				}
