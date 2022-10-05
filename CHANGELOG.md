@@ -4,6 +4,10 @@ All notable changes to the "German-Synonyms" extension will be documented in thi
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
+## [1.3.0] - 2022-10-05
+### Changed
+- Autoselect word (#2)
+
 ## [1.2.1] - 2020-10-05
 ### Added
 - Icon.
