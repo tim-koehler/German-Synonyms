@@ -18,12 +18,27 @@ export function activate(context: vscode.ExtensionContext): void {
 	let disposable = vscode.commands.registerCommand('German-Synonyms.lookupSynonym', () => {
 
 		const editor = vscode.window.activeTextEditor;
-		const rawWord = editor?.document.getText(editor.selection);
 
-		if (rawWord === undefined) {
+		if (editor === undefined) {
 			return;
 		}
 
+		const doc = editor.document;
+		const selection = editor.selection;
+		let wordRange: vscode.Range;
+
+		if (selection.isEmpty) {
+			wordRange = doc.getWordRangeAtPosition(selection.active) as vscode.Range;
+
+			if (wordRange === undefined) {
+				vscode.window.showInformationMessage(`No text found`);
+				return;
+			}
+		} else {
+			wordRange = selection;
+		}
+
+		const rawWord = doc.getText(wordRange);
 		const encodedWord = encodeURI(rawWord);
 		console.log(encodedWord);
 
@@ -45,9 +60,9 @@ export function activate(context: vscode.ExtensionContext): void {
 				const terms = getTerms(data);
 
 				if (terms.length === 0) {
-					vscode.window.showInformationMessage(`No synonym found for '${encodedWord}'`);
+					vscode.window.showInformationMessage(`No synonym found for '${rawWord}'`);
 				} else {
-					showQuickpick(terms);
+					showQuickpick(terms, editor, wordRange);
 				}
 			});
 		}).on("error", (err) => {
@@ -70,13 +85,12 @@ function getTerms(data: string): string[] {
 		.map(term => term.term);
 }
 
-function showQuickpick(terms: string[]): void {
-	const editor = vscode.window.activeTextEditor;
+function showQuickpick(terms: string[], editor: vscode.TextEditor, wordRange: vscode.Range): void {
 	const quickPick = vscode.window.createQuickPick();
 	quickPick.items = terms.map((term: any) => ({ label: term }));
 	quickPick.onDidChangeSelection(([item]) => {
 		if (item) {
-			editor?.edit(edit => edit.replace(editor.selection, item.label));
+			editor.edit(edit => edit.replace(wordRange, item.label));
 			quickPick.dispose();
 		}
 	});
